@@ -1,0 +1,35 @@
+=>SELECT DATA BY AND,OR and NOT opertator;
+
+AND OR operators are used to filter data, records based
+
+AND opertator display a record TRUE
+OR operator display a record TRUE
+NOt operatordisplay a record NOT TRUE
+
+Where clause can be combined with AND ,OR ,NOT operators
+
+Method 1 AND Syntax
+SELECT * FROM tablename
+WHERE city='mandalay' AND city='yangon';
+
+SELECT column1,column2....
+FROM tablename
+WHERE NOT country='thailand';
+
+
+Method 2 AND Syntax
+SELECT column1,column2...
+WHRER 
+
+=>Exercises...
+SELECT * FROM employees;
+SELECT name,age,city FROM employees;
+ 
+ SELECT employeeid,name,salary
+ FROM employees
+ WHERE salary > 200000;   
+
+ ### > ,< ,>= , <= , <> ,= , LIKE
+ 
+
+

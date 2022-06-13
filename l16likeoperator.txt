@@ -1,0 +1,39 @@
+=>LIKE Operator...
+
+Wildcards(7 types)
+
+WHERE customername LIKE 'a%         find any values that start with a
+WHERE customername LIKE '%a'        find any values that end with a
+WHERE customername LIKE '%or%'      find any values that have'or' in any position
+WHERE customername LIKE '_r%'        find any value that have 'r' in second position
+WHERE customername LIKE 'a_%'       find any value that start with 'a' and have at least 2 characters in length
+WHERE customername LIKE 'a__%'      find any value that start with 'a' and have at least 3 characters in length
+WHERE customername LIKE 'a%o'       find any value that start with 'a' and ends with 'o'
+
+Syntax(Exercise)
+
+SELECT * FROM tablename
+WHERE columnname LIKE pattern;
+
+SELECT column1,column2,...
+From tablename
+WHERE columnname LIKE pattern;
+
+SELECT name,age,salary,city FROM employees WHERE salary LIKE '1%';
+SELECT name,age,salary,city FROM employees WHERE salary LIKE 200000;
+SELECT name,age,salary,city FROM employees WHERE name LIKE '%a';
+SELECT name,age,salary,city FROM employees WHERE name LIKE '%zaw%';
+SELECT name,age,salary,city FROM employees WHERE name LIKE 't%;
+SELECT name,age,salary,city FROM employees WHERE name LIKE 'a__%';
+SELECT name,age,salary,city FROM employees WHERE name LIKE 'a_%';
+SELECT name,age,salary,city FROM employees WHERE name LIKE '_a%';
+
+Exercise( LIKE '____')
+SELECT * FROM employees WHERE name'____'; //For foue characteres
+
+face_book
+SELECT * FROM employees WHERE name='%\_%';
+
+10@streewt
+
+SELECT * FROM employees WHERE name ='%/@%';

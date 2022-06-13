@@ -1,0 +1,20 @@
+=>UPDATE DATA BY USING WHERE clause
+
+UPDATE Syntax <=
+1)..UPDATE tablename
+    SET colum1 = value1 , column2 = value2 ,...
+     WHERE condition;
+
+     UPDATE customers
+    SET contactname= 'maung maung', city ='mandalay'
+    WHERE customersid = 1;
+
+
+    e.g----------
+    UPDATE mobiles 
+    SET made='thailand'
+    WHERE bran='samsung';
+
+    UPDATE mobiles
+    SET bran= 'nokia'
+    WHERE made= 'japan';

@@ -1,0 +1,147 @@
+=>Inner Join
+
+DROP TABLE IF EXISTS orders;
+
+customer id is a primary key(PK) in customers table.
+order id is a primary key (PK) in orders table.
+customer id is a foreign key (FK) in orders table.
+
+CREATE TABLE IF NOT EXISTS orders( 
+id INT AUTO_INCREMENT PRIMARY KEY, 
+orderdate DATE, 
+amount DECIMAL(10,2), 
+customer_id INT,
+FOREIGN KEY(customer_id) REFERENCES customers(id)
+);
+
+INSERT INTO orders(orderdate,amount,customer_id)
+VALUES('2021/02/10',99.99,1),
+('2021/10/11',75.35,1),
+('2021/06/12',100.26,3),
+('2021/07/13',13.25,2),
+('2021/01/14',45,3);
+
+Error*** there is not existed customer id.
+INSERT INTO orders(orderdate,amount,customer_id) VALUES('2021/10/10',70.25,20);
+
+INSERT INTO orders(orderdate,amount,customer_id) VALUES('2021/10/10',80.50,7);
+
+INSERT INTO orders(orderdate,amount,customer_id) VALUES('2021/10/10',80,8);
+
+Error**
+INSERT INTO orders(orderdate,amount,customer_id) VALUES('2021/10/10',80,8),('2021/10/10',108,9);
+
+Error** Linked table
+DROP TABLE IF EXISTs customers;
+
+Error ** datas saved in linked table 'orders'
+DELETE FROM customers WHERE id = 1;
+
+No error..
+DELETE FROM customers WHERE id = 4;
+DELETE FROM customers WHERE id = 5;
+-----------------------------------------------
+//Drop tables ,create again and insert datas
+
+//Join Tables
+
+=>Method1
+SELECT * FROM customers,orders WHERE customers.id = orders.customer_id;
+
+SELECT * FROM orders,customers WHERE customers.id = orders.customer_id;
+
+=>Method2
+SELECT * FROM customers
+JOIN orders
+On customers.id = orders.customer_id;
+
+SELECT * FROM orders
+JOIN customers
+On customers.id = orders.customer_id;
+
+SELECT firstname,lastname,orderdate,amount 
+FROM customers 
+JOIN orders 
+ON customers.id = orders.customer_id;
+
+SELECT firstname,lastname,orderdate,amount 
+FROM orders 
+JOIN customers 
+ON customers.id = orders.customer_id;
+
+=>Method3
+SELECT firstname,lastname,orderdate,amount 
+FROM orders 
+INNER JOIN customers 
+ON customers.id = orders.customer_id;
+----------------------------------------------
+
+SELECT firstname,lastname,orderdate,amount 
+FROM orders 
+INNER JOIN customers 
+ON customers.id = orders.customer_id
+ORDER BY orderdate;
+
+SELECT firstname,lastname,orderdate,amount 
+FROM orders 
+INNER JOIN customers 
+ON customers.id = orders.customer_id
+ORDER BY amount;
+
+SELECT firstname,lastname,orderdate,amount 
+FROM orders 
+INNER JOIN customers 
+ON customers.id = orders.customer_id
+ORDER BY amount DESC;
+
+SELECT firstname,lastname,orderdate,amount AS 'Total Amount'
+FROM orders 
+INNER JOIN customers 
+ON customers.id = orders.customer_id
+ORDER BY 'Total Amount' DESC;
+
+SELECT CONCAT(firstname,' ',lastname) AS 'Full Name',orderdate,amount
+FROM orders
+INNER JOIN customers 
+ON customers.id = orders.customer_id;
+
+=> Group ဖွဲ့လိုက်ပေမဲ့  id တူတာပဲပေါင်းသွားပြီး ငွေ amount တော့ ပေါင်းပြီးမပြ
+SELECT firstname,lastname,orderdate,amount 
+FROM orders 
+INNER JOIN customers 
+ON customers.id = orders.customer_id
+GROUP BY orders.customer_id;
+
+
+SELECT firstname,lastname,orderdate,SUM(amount) As 'Total' 
+FROM orders 
+INNER JOIN customers 
+ON customers.id = orders.customer_id
+GROUP BY orders.customer_id;
+
+SELECT firstname,lastname,orderdate,SUM(amount) As 'Total',COUNT(*) 
+FROM orders 
+INNER JOIN customers 
+ON customers.id = orders.customer_id
+GROUP BY orders.customer_id;
+
+SELECT CONCAT(firstname,' ',lastname) AS 'Full Name',orderdate,SUM(amount) As 'Total',COUNT(*) 
+FROM orders 
+INNER JOIN customers 
+ON customers.id = orders.customer_id
+GROUP BY orders.customer_id;
+
+SELECT CONCAT(firstname,' ',lastname) AS 'Full Name',orderdate,SUM(amount) As TotalAmount,COUNT(*) As 'Total Order'
+FROM orders 
+INNER JOIN customers 
+ON customers.id = orders.customer_id
+GROUP BY orders.customer_id
+ORDER BY TotalAmount DESC;
+
+SELECT CONCAT(firstname,' ',lastname) AS 'Full Name',orderdate,SUM(amount) As 'TotalAmount',COUNT(*) As 'Total Order'
+FROM orders 
+INNER JOIN customers 
+ON customers.id = orders.customer_id
+GROUP BY orders.customer_id
+ORDER BY TotalAmount ASC;
+

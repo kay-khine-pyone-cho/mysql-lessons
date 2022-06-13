@@ -1,0 +1,69 @@
+=>SELECT data by using WHERE clause
+
+NOTE:WHERE clause is not only used in SELECT record,it is also used in
+UPDATE , DELETE ...
+
+Method1..Syntax
+SELECT * FROM tablename
+WHERE condition;
+
+Method2..Syntax
+SELECT column1,column2,...
+FROM tablename
+WHERE condition;
+
+
+Operators in WHERE clause
+=
+>
+<
+>=
+<=
+<>  !=
+LIKE
+BETWEEl,N
+IN
+DELETE FROM customers WHERE id = 'XXXX';   <=single value DELETE
+DELETE FROM customers WHERE customername ='aung aung';   <= multi value delete
+DELETE FROM stus WHERE name='....';
+DELETE FROM stus WHERE age='18';
+_____________________________________-
+
+<>  / !=
+
+SELECT personid,firstname,city FROM persons WHERE city = 'yangon';
+SELECT personid,firstname,city FROM persons WHERE city <> 'mandalay';
+SELECT personid,firstname,city FROM persons WHERE city != 'mandalay';
+SELECT personid,firstname,city FROM persons WHERE NOT city = 'mandalay';
+SELECT personid,firstname,city FROM persons WHERE city NOT LIKE 'mandalay';
+SELECT personid,firstname,city FROM persons WHERE city NOT LIKE 'man%';
+
+
+
+SELECT * FROM employees;
+SELECT employeeid,name,age,salary,city  FROM employees
+WHERE age%2 !=0;
+SELECT employeeid,name,age,salary,city  FROM employees
+WHERE age+1 <= 18;
+SELECT employeeid,name,age,salary,city  FROM employees
+WHERE salary*2 < 300000;
+SELECT employeeid,name,age,salary,city  FROM employees
+WHERE salary/2 < 100000;
+
+BETWEEN=>
+SELECT employeeid,name,age,salary,city  FROM employees
+WHERE salary BETWEEN 200000 AND 300000;
+SELECT employeeid,name,age,salary,city  FROM employees
+WHERE city = 'chin' AND salary BETWEEN 200000 AND 300000;
+SELECT employeeid,name,age,salary,city  FROM employees
+WHERE salary BETWEEN 200000 AND 300000 AND city ='chin'
+;
+SELECT employeeid,name,age,salary,city  FROM employees
+WHERE city = 'chin' AND salary NOT BETWEEN 200000 AND 300000;
+
+IN=>
+SELECT  name,age,salary from employees WHERE name IN ('aung aung','tar gyi','aye aung');
+SELECT  name,age,salary from employees WHERE name IN ('ko nyein maung');
+SELECT  name,age,salary from employees WHERE salary IN (100000,200000,300000);
+_____________________________
+

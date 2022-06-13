@@ -1,0 +1,117 @@
+=>Function
+(i) PROCEDURE  (stored procedure)
+		(a)	IN 	= Input Parameter
+		(b) OUT = Output Parameter
+		(c) INOUT = Inout Parameter
+(ii) FUNCTION
+		(a)DEFAULT Function(Build in)
+		(b)User Define Function
+			(i)IN = input parameters
+			_________________________________
+
+=>Function (User Define Function)
+
+SELECT products.name,checkouts.qty,(products.price * checkouts.qty) AS totalamount
+FROM checkouts
+LEFT JOIN products
+ON checkouts.product_id = products.id;
+
+=>Total Amount
+SELECT SUM(products.price * checkouts.qty) AS totalamount
+FROM checkouts
+LEFT JOIN products
+ON checkouts.product_id = products.id;
+
+DELIMITER //
+CREATE FUNCTION totalamount_fun()
+RETURNS DECIMAL
+DETERMINISTIC
+BEGIN
+	DECLARE totalamount DECIMAL;
+	SELECT SUM(products.price * checkouts.qty)
+	INTO totalamount
+	FROM checkouts
+	LEFT JOIN products
+	ON checkouts.product_id = products.id;
+	RETURN totalamount;
+END; //
+
+DELIMITER ;
+
+SELECT totalamount_fun();
+SHOW FUNCTIONS STATUS WHERE DB = 'wdf6499';
+
+DROP FUNCTION IF EXISTS totalamount_fun;
+
+
+_________________________________
+
+=>Input parameters
+=>Total Amount By ID
+
+SELECT SUM(products.price * checkouts.qty) AS totalamount
+FROM checkouts
+LEFT JOIN products
+ON checkouts.product_id = products.id
+WHERE products.id = 1;
+
+DELIMITER //
+CREATE FUNCTION totalamountbyproductid_fun(p_productid INT)
+RETURNS DECIMAL
+DETERMINISTIC
+BEGIN
+	DECLARE totalamount DECIMAL;
+	SELECT SUM(products.price * checkouts.qty)
+	INTO totalamount
+	FROM checkouts
+	LEFT JOIN products
+	ON checkouts.product_id = products.id
+	WHERE products.id = p_productid;
+	RETURN totalamount;
+END; //
+
+DELIMITER ;
+
+SELECT totalamountbyproductid_fun(1);
+SELECT totalamountbyproductid_fun(2);
+SELECT totalamountbyproductid_fun(3);  =>NULL
+___________________________________________________
+
+=>INPUT parameter(MULTI parameter)
+=>Total amount by currency
+
+SELECT SUM(products.price * checkouts.qty) AS totalamount
+FROM checkouts
+LEFT JOIN products
+ON checkouts.product_id = products.id
+WHERE products.id = 1 AND checkouts.payment = 'visa';
+
+DELIMITER $$
+CREATE FUNCTION totalamountbycurrency_fun(
+	p_productid INT,
+	p_payment VARCHAR(4)
+)
+RETURNS DECIMAL DETERMINISTIC
+	BEGIN
+	DECLARE totalamount DECIMAL;
+	SELECT SUM(products.price * checkouts.qty) 
+	INTO totalamount
+	FROM checkouts
+	LEFT JOIN products
+	ON checkouts.product_id = products.id
+	WHERE products.id = p_productid AND checkouts.payment = p_payment;
+	RETURN totalamount;
+END; $$
+DELIMETER ;
+ 
+ SELECT totalamountbycurrency_fun(1,'visa');
+ SELECT totalamountbycurrency_fun(1,'mpu');
+ SELECT totalamountbycurrency_fun(1,'cod');
+
+ SELECT totalamountbycurrency_fun(2,'visa');
+ SELECT totalamountbycurrency_fun(2,'mpu');
+ SELECT totalamountbycurrency_fun(2,'cod');
+
+ SELECT totalamountbycurrency_fun(3,'visa');
+ SELECT totalamountbycurrency_fun(3,'mpu');
+ SELECT totalamountbycurrency_fun(3,'cod');

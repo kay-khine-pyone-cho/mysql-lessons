@@ -1,0 +1,72 @@
+=>Join
+
+Table ပေါင်းရင် မတူညီတဲ့ Field Name တွေနဲ့ ပေါင်း
+
+1. 	Inner Join (or simple join)
+2.	Left Outer Join (or left join)
+3.	Right Outer Join (or right join)
+4.	Full Join
+_________________________________________
+CREATE TABLE customers(
+id INT AUTO_INCREMENT PRIMARY KEY,
+firstname VARCHAR(20),
+lastname VARCHAR(20),
+email VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS orders( 
+id INT AUTO_INCREMENT PRIMARY KEY, 
+orderdate DATE, 
+amount DECIMAL(10,2), 
+customer_id INT 
+);
+
+
+INSERT INTO customers(firstname,lastname,email) 
+VALUES('aung','aung','aungaung@gmail.com'),
+('maung','maung','maungmaung@gmail.com'),
+('kyaw','kyaw','kyawkyaw@gmail.com'),
+('zaw','zaw','zawzaw@gmail.com'),
+('su','su','susu@gmail.com'),
+('aye','aye','ayeaye@gmail.com'),
+('yu','yu','yuyu@gmail.com');
+
+
+INSERT INTO orders(orderdate,amount,customer_id)
+VALUES('2021/02/10',99.99,1),
+('2021/10/11',75.35,1),
+('2021/06/12',100.26,3),
+('2021/07/13',13.25,2),
+('2021/01/14',45,3);
+
+
+SELECT * FROM orders WHERE customer_id = ( 
+SELECT id FROM customers WHERE lastname = 'maung'
+);
+
+SELECT * FROm orders WHERE customer_id =(
+SELECT id FROM customers WHERE lastname = 'maung'
+);
+
+
+ERROR ***SELECT  Subquery returns more than 1 row
+SELECT * FROm orders WHERE customer_id = (
+SELECT id FROM customers WHERE lastname = 'aung'
+ );    
+
+ SELECT * FROm orders WHERE customer_id = ( 
+ SELECT id FROM customers WHERE email = 'htooaung@gmail.com' );     
+
+
+
+N0 error**
+INSERT INTO orders(orderdate,amount,customer_id) VALUES('2021/10/10',70.25,20);
+
+______________________________________________
+ =>Cross Join
+
+
+ RS=> show mixing result
+ SELECT * FROM customers,orders;
+ SELECT * FROM orders,customers; 
+

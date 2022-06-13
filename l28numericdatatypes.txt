@@ -1,0 +1,229 @@
+*Numeric Data Types (14 types)
+
+Data Type	Description
+1.BIT(size)	`	a bit-value type. default 1
+
+2.BOOL 		Zero is false, nonzero valuse are ture
+3.BOOLEAN	Equal to BOOL
+
+
+
+4.TINYINT(size)	A very small integer. Signed range from -128 to 127.
+		Unsigned range is from 0 to 255.
+5.SMALLINT(size) 	A small integer. Signed rage is from -32768 to 32767.
+		Unsigned range is from 0 to 65535.(65kb)
+6.MEDIUMINT(size)	A medium integer. Signed rage is from -8388608 to 8388608 
+		Unsigned range is from 0 to 16777215.(16mb)
+7.INT(size)		A medium integer.  Signed rage is from -2147483648 to 2147483648  
+		Unsigned range is from 0 to 429497295. (4GB)
+8.INTEGER(size)	Equal to INT(size).
+9.BIGINT(size)	A large integer. (18GB)
+
+
+->Fixed Point(Exact Value)
+10.DECIMAL(size,d) An exact fixed-point number eg.DECIMA(5,2) (333.33)
+11.DEC(size,d)	Equal to DECIMAL(size,d)
+
+
+->Floating-Point(Approximate Value)
+12.FLOAT(p)	a floating point number.(p optional)
+13.DOUBLE(size,d)	
+14.DOUBLE PRECISION(size,d) DOUBLE(size,d)
+NOTE: DECIMAL for finance( such as money)
+           Float for science application	
+_________________________________________________________________________________________
+BOOL and INT(size)
+
+CREATE TABLE items(
+	name VARCHAR(20),
+	price  INT(11),
+	status BOOL
+);
+INSERT INTO items(name,price)
+VALUES ('water',100),
+('coffee',500),
+('cake',800),
+('redbull',250.56),
+('jam',1000);
+
+INSERT INTO items(name,price,status)
+VALUES ('water',100,1),
+('coffee',500,0),
+('cake',800,1),
+('redbull',250.56,0),
+('jam',1000,2);
+
+INSERT INTO items(name,price,status)
+VALUES ('water',100,1),
+('coffee',-500,0),
+('cake',800,1),
+('redbull',250.56,0),
+('jam',-1000,2);
+
+SELECT * FROM items;
+DROP TABLE items;
+
+
+CREATE TABLE items(
+	name VARCHAR(20),
+	purchaseprice INT(4) SIGNED,
+	sellprice INT(4) UNSIGNED,
+	status BOOL
+);
+
+DESC items;
+
+
+INSERT INTO items(name,price,status)
+VALUES ('water',9000,9500,1),
+('coffee',-100,100,0),
+('cake',800,1000,1),
+('redbull',250.42,300.67,1),
+('jam',1000,1200,1);
+
+INSERT INTO items(name,price,status)
+VALUES ('water',9000,10000,1),
+('coffee',-100,100,0),
+('cake',800,1000,1),
+('redbull',250.42,300.67,1),
+('jam',1000,1200,1);
+
+SELLECT * FROM items;
+DROP items;
+___________________________
+DECIMAL (5,2) (Total Number of Digits, Digits after decimal)
+eg(333.33) is mean 5 digits and 2 decimal
+
+CREATE TABLE items(
+	name VARCHAR(20),
+	price DECIMAL(6,2)
+);
+DESC items;
+
+INSERT INTO items(name,price)
+VALUE('water',500);
+
+INSERT INTO items(name,price)
+VALUE('coffee',100.43);
+
+INSERT INTO items(name,price)
+VALUE('redbull',250.56);
+
+INSERT INTO items(name,price)
+VALUE('redbull',1000);
+
+INSERT INTO items(name,price)
+VALUE('redbull',1000.99);
+
+*error
+INSERT INTO items(name,price)
+VALUE('redbull',10000);
+
+SELECT * FROM items;	
+
+______________________________________________________
+**SHOW Warning counts
+SHOW COUNT(*) WARNINGS;
+SELECT @@warning_count;
+
+**SHOW warnings
+SHOW WARNINGS;
+SHOW WARNINGS LIMIT 3;
+SHOW WARNINGS \G;       \G = modifier (to show vertically ,not a table)
+SELECT * FROM items \G;
+eg- SELECT 1/0;
+
+**Show Errrors
+SHOW COUNT(*) ERRORS;
+SELECT @@error_count;
+SHOW ERRORS;
+SHOW ERRORS \G;
+
+**Change error count Setting
+SHOW VARIABLES LIKE 'max_error_count'
+SET max_error_count=1024;     <= 1024 can be any number(user can define how much errors can be shown) ,but it affects 										for one time,
+____________________________________________________________
+> CREATE TABLE teas(
+    -> name VARCHAR(20),
+    -> ordinaryprice DECIMAL(5),
+    -> specialprice DECIMAL(5,0)
+    -> );
+
+INSERT INTO teas VALUES ('milk tea',56789,12345);
+INSERT INTO teas VALUES ('thai tea',56789.00,12345.00);
+INSERT INTO teas VALUES ('indonesia tea',56789.34,12345.56);   <=Warnings
+INSERT INTO teas VALUES ('myanmar tea',567899,123456);         <=Errors
+
+
+____________________________________________________________________________________
+*****Floating-point
+*****FLOAT Vs. DOUBLE(,)
+Note:: Float and double data types are floating-point types and reprecent by approximate.
+Note::Balance between range and precision.
+
+FLOAT(5,3) = 20.234
+20.5 = 20.500
+20.5234567 = 20.524 ( no warning because 20,524 is an approximate value)
+
+CREATE TABLE shopping( 
+name VARCHAR(20),
+purchaseprice FLOAT, 
+sellprice FLOAT(4)    
+);
+<= option ပေးလည်း အလုပ်မလုပ် ၊ သတ်မှတ်ပေးလို့မရ 
+
+ INSERT INTO shopping 
+ VALUES ('water',100,100),
+ ('coffee',500,500.34),
+ ('cake',800,800.56),
+ ('snack',250,250.889),
+ ('jam',9000,10000);
+
+
+
+INSERT INTO shopping VALUES ('brands birdnest',112233.45,112233.45);
+Result ::112233 112233
+
+INSERT INTO shopping VALUES ('royal birdnest',11223344.45,11223344.45);
+Result :: 11223300 11223300   ခြောက်လုံးကျော်တာနဲ့ ဇီးရိုးဖြစ်မှာပဲ
+
+INSERT INTO shopping VALUES ('ayo birdnest',1122334455.45,1122334455.45);
+Result :: 1122330000 1122330000
+_______________________
+CREATE TABLE shopping( 
+name VARCHAR(20),
+purchaseprice FLOAT, 
+sellprice DOUBLE    
+);
+
+INSERT INTO buyings VALUES 
+('water',100,100),
+('coffee',500.34,500.34),
+('cake',800.56,800.56),
+('snack',250.889,250.889),
+('jam',10000,10000);
+
+
+INSERT INTO shopping VALUES ('brands birdnest',112233.45,112233.45);
+Result ::112233 112233
+
+INSERT INTO shopping VALUES ('royal birdnest',11223344.45,11223344.45);
+Result :: 11223300 11223344.45   ခြောက်လုံးကျော်တာနဲ့ ဇီးရိုးဖြစ်မှာပဲ
+
+INSERT INTO shopping VALUES ('ayo birdnest',1122334455.45,1122334455.45);
+Result :: 1122330000 1122334455.56
+
+INSERT INTO shopping VALUES ('gold birdnest',112233445566.45,112233445566.45);
+Result ::112233000000 112233445566.4
+
+INSERT INTO shopping VALUES ('diamond birdnest',11223344556677.45,11223344556677.45);
+Result :: 11223300000000 11223344556677.45   
+
+INSERT INTO shopping VALUES ('silver birdnest',1122334455667788.45,1122334455667788.45);
+Result :: 1.112233e15 1122334455667788.5
+3e15 =3 ,000,000,000,000,000
+
+INSERT INTO shopping VALUES ('platinum birdnest',112233445566778899.45,112233445566778899.45);
+Result :: 1.112233e17 1.1223344556677889945e17
+3e17 =300,000,000,000,000,000,
+

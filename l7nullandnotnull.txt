@@ -1,0 +1,34 @@
+NULL datatype...
+
+CREATE TABLE students(
+    name varchar(10),
+    age int(11),
+
+
+);
+INSERT INTO students(name,age) VALUES ('aung aung',20);
+INSERT INTO students(name,age) VALUE ('Su Su',30);
+INSERT INTO students(name) VALUE ('ma ma');
+INSERT INTO students (age) VALUE (20);
+INSERT INTO students () VALUE ();
+
+-----------------------------------------
+NOT NULL datatype...
+
+DROP TABLE students;
+CREATE TABLE stus(
+    name VARCHAR(10) NOT NULL,
+    age INT(11)
+);
+INSERT INTO stus(name,age) VALUES ('aung aung',20);
+INSERT INTO stus(name,age) VALUES ('su su',20);
+INSERT INTO stus(name) VALUES ('ma ma');
+INSERT INTO stus(age) VALUES (20)  <=ERROR
+INSERT INTO stus() VALUES (); <=ERROR
+INSERT INTO stus VALUES('hnin mya',15);
+INSERT INTO stus VALUES (20); <=ERROR
+
+DROP and CREATE
+INSERT INTO stus(name,age) VALUES ('aung aung',20);
+INSERT INTO stus(name,age) VALUES ('su su',30);
+INSERT INTO stus(name) VALUE ('ma ma'); <=ERROR

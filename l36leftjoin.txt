@@ -1,0 +1,25 @@
+=>Inner Join
+SELECT * FROM customers
+INNER JOIN orders
+ON customers.id = orders.customer_id;
+
+=>Left Join (or) LEFT OUTER JOIN
+ (ဘယ်ဘက်မှာရှိတဲ့ tableက dataတွေ အကုန် ပြန်ပါလာ/ Right tableမှာ dataမတူရင် Null အနေနဲ့ ပြ)
+=>RIGHT JOIN (or) RIGHT OUTER JOIN
+
+
+SELECT * FROM customers
+LEFT JOIN orders
+ON customers.id = orders.customer_id;
+
+SELECT * FROM orders
+LEFT JOIN customers
+ON customers.id = orders.customer_id;
+
+SELECT * FROM customers
+RIGHT JOIN orders
+ON customers.id = orders.customer_id;
+
+SELECT * FROM orders
+RIGHT JOIN customers
+ON customers.id = orders.customer_id;

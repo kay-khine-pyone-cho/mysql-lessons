@@ -1,0 +1,24 @@
+=> CONCAT 
+
+Syntax____
+
+SELECT CONCAT(Firstname,lastname) FROM tablename;
+
+Exercise____
+SELECT CONCAT(firstname,lastname) FROM persons;
+SELECT CONCAT(firstname,' ',lastname) FROM persons;
+SELECT CONCAT('Hello','...','World');
+SELECT CONCAT('Hello',' ','World');
+ SELECT CONCAT(firstname,' ',lastname) AS fullname FROM persons;
+SELECT CONCAT(firstname,' ',lastname) AS fullname,city FROM persons;
+SELECT firstname AS first,lastname AS last,CONCAT(firstname,' ',lastname) AS full FROM persons;
+SELECT firstname AS first,lastname AS last,CONCAT(firstname,'/',lastname) AS full FROM persons;
+
+___________________________________________________________________________________________________
+
+=>CONCAT_WS(Concat with separator)
+
+SELECT CONCAT_WS('-',firstname,lastname) FROM persons;
+SELECT CONCAT_WS('-',firstname,lastname,city) FROM persons;
+SELECT CONCAT_WS('/',firstname,lastname,city) FROM persons;
+SELECT CONCAT_WS('_',firstname,lastname,city) FROM persons;

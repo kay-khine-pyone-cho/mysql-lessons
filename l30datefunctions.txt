@@ -1,0 +1,269 @@
+=> Date() Functions 
+
+SELECT DATE('2021-12-19');				RS=> 2021-12-19
+SELECT DATE('2021-12-19 09:30:00');		RS=> 2021-12-19
+------------------------------------------------------------------
+
+=> Year() Functions
+
+SELECT YEAR('2021-12-19');				RS=> 2021
+SELECT YEAR('2021-12-19 09:30:00');		RS=> 2021
+
+=> DAYOFYEAR() Function
+
+SELECT DAYOFYEAR('2021-12-19');		RS=>353
+-----------------------------------------------------------------
+
+=> MONTH() Function
+
+SELECT MONTH('2021-12-19');		RS=>12
+
+=>MONTHNAME() Function
+
+SELECT MONTHNAME('2021-12-19');		RS=>December
+-------------------------------------------------
+
+=>WEEK() Function
+
+SELECT WEEK('2021-12-19');		RS=>51
+
+=>DAYOFWEEK()
+
+SELECT DAYOFWEEK('2021-12-19');		RS=>1    
+Sunday is 1 in sql but 0 in JS,
+Note:; 1 =Sunday, 2= Monday,...
+------------------------------------------------------------
+
+=>DAY()
+
+SELECT DAY('2021-12-19');				RS=>12
+SELECT DATE('2021-12-19 09:30:00');		RS=>12
+
+=>DAYNAME()
+
+SELECT DAYNAME('2021-12-19');				RS=> Sunday
+SELECT DAYNAME('2021-12-19 09:30:00');		RS=> Sunday
+------------------------------------------------------------
+
+=>HOUR()
+
+SELECT DAYNAME('09:30:00');				RS=>9
+SELECT HOUR('2021-12-19 09:30:00');		RS=>9
+SELECT DAYNAME('2021-12-19');			RS=>0
+------------------------------------------------------------
+=>MINUTE()
+
+SELECT MINUTE('09:30:00');				RS=>30
+SELECT MINUTE('2021-12-19 09:30:00');	RS=>30
+SELECT MINUTE('2021-12-19');			RS=>20
+------------------------------------------------------------
+
+=>SECOND()
+
+SELECT SECOND('09:30:40');				RS=>30
+SELECT SECOND('2021-12-19 09:30:40');	RS=>30
+SELECT SECOND('2021-12-19');			RS=>21
+------------------------------------------------------------
+
+=>ADDDATE() Function
+ADDDATE(date,INTERVAL value addunit)
+
+SELECT ADDDATE('2021-12-19',INTERVAL 10 YEAR);  			RS=>2031-12-19
+SELECT ADDDATE('2021-12-19',INTERVAL 10 MONTH);  			RS=>2021-10-19
+SELECT ADDDATE('2021-12-19',INTERVAL 2 WEEK);  				RS=>2022-01-02
+SELECT ADDDATE('2021-12-19',INTERVAL 10 DAY);  				RS=>2021-12-29
+SELECT ADDDATE('2021-12-19',INTERVAL -10 DAY);				RS=>2021-12-09
+SELECT ADDDATE('2021-12-19',INTERVAL 10 HOUR);				RS=>2021-12-19 10:00:00
+SELECT ADDDATE('2021-12-19 09:30:40',INTERVAL 10 HOUR);		RS=>2021-12-20 10:30:40
+SELECT ADDDATE('2021-12-19 09:30:40',INTERVAL -10 HOUR);	RS=>2021-12-18 23:30:40
+SELECT ADDDATE('2021-12-19 09:30:40',INTERVAL 25 HOUR);  	RS=>2021-12-19 19:30:40
+SELECT ADDDATE('2021-12-19 09:30:40',INTERVAL 20 MINUTE);	RS=>2021-12-20 09:50:40
+SELECT ADDDATE('2021-12-19 09:30:40',INTERVAL -20 MINUTE);	RS=>2021-12-20 09:10:40
+SELECT ADDDATE('2021-12-19 09:30:40',INTERVAL 20 SECOND)  	RS=>2021-12-20 09:31:00
+
+SELECT ADDDATE('09:30:40',INTERVAL 10 HOUR);				RS=>NULL
+------------------------------------------------------------
+
+=>SUBDATE() Function
+
+SELECT SUBDATE('2021-12-19',INTERVAL 10 YEAR);  			RS=>2011-12-19
+SELECT SUBDATE('2021-12-19',INTERVAL 10 MONTH);  			RS=>2021-02-19
+SELECT SUBDATE('2021-12-19',INTERVAL 2 WEEK);  				RS=>2021-12-05
+SELECT SUBDATE('2021-12-19',INTERVAL 10 DAY);  				RS=>2021-12-09
+SELECT SUBDATE('2021-12-19',INTERVAL -10 DAY);				RS=>2021-12-29
+SELECT SUBDATE('2021-12-19',INTERVAL 10 HOUR);				RS=>2021-12-18 14:00:00
+SELECT SUBDATE('2021-12-19 09:30:40',INTERVAL 10 HOUR);		RS=>2021-12-18 23:30:40
+SELECT SUBDATE('2021-12-19 09:30:40',INTERVAL -10 HOUR);	RS=>2021-12-19 19:30:40
+SELECT SUBDATE('2021-12-19 09:30:40',INTERVAL 25 HOUR);  	RS=>2021-12-18 08:30:40
+SELECT SUBDATE('2021-12-19 09:30:40',INTERVAL 20 MINUTE);	RS=>2021-12-19 09:10:40
+SELECT SUBDATE('2021-12-19 09:30:40',INTERVAL -20 MINUTE);	RS=>2021-12-20 09:50:40
+SELECT SUBDATE('2021-12-19 09:30:40',INTERVAL 20 SECOND)  	RS=>2021-12-20 09:30:20
+
+SELECT SUBDATE('09:30:40',INTERVAL 10 HOUR);				RS=>NULL
+------------------------------------------------------------
+
+=>DATEDIFF() Function
+DATEDIFF(date1,date2)    date1 should be greater than date2
+
+SELECT DATEDIFF('2021-12-19','2021-10-19'); 							RF=>61
+SELECT DATEDIFF('2021-12-19 09:30:00','2021-10-19 09:30:00'); 			RF=>61
+SELECT DATEDIFF('2021-12-19','2021-10-2'); 								RF=>78
+SELECT DATEDIFF('2021/12/19','2021/10/02'); 							RF=>78
+SELECT DATEDIFF('2021/12/19','2021/10/02') AS 'DIFF'; 					RF=>78
+SELECT DATEDIFF('2021-12-18','2021-12-19');								RF=>-1
+
+SELECT DATEDIFF('12-18-2021','12-19-2021');								RF=>NULL
+------------------------------------------------------------
+
+=>TIMEDIFF() Function
+TIMEDIFF(time1,time2)
+
+SELECT TIMEDIFF('09:30:00','09:00:00');								RF=>00:30:00
+SELECT TIMEDIFF('2021-12-19 09:30:00','2021-12-18 09:00:00');		RF=>24:30:00
+SELECT TIMEDIFF('2021-12-19 09:30:00','2021-11-18 09:00:00');		RF=>744:30:00
+ _________________________________________________
+ ***TIME Formatting
+
+ %H 		Hour ()
+ %h 		Hour
+ %I 
+
+ %i
+
+ %S
+ %s
+
+ %p
+
+ %r
+
+ %T
+
+---------------------------------------
+ TIME_FORMAT()
+
+ SELECT TIME_FORMAT('13:30:40','%H.%i.%s');			RS=>13.30.40
+ SELECT TIME_FORMAT('13:30:40','%h.%i.%s');			RS=>01.30.40
+ SELECT TIME_FORMAT('13:30:40','%I.%i.%s');			RS=>01.30.40
+ SELECT TIME_FORMAT('13:30:40','%I.%i.%S');			RS=>01.30.40
+ SELECT TIME_FORMAT('13:30:40','%H.%i.%S %p');		RS=>13.30.40 PM
+ SELECT TIME_FORMAT('13:30:40','%h.%i.%S %p');		RS=>01.30.40 PM
+ SELECT TIME_FORMAT('13:30:40','%r');				RS=>01.30.40 PM
+ SELECT TIME_FORMAT('09:30:40','%r');				RS=>09.30.40 AM
+ SELECT TIME_FORMAT('13:30:40','%T');				RS=>13.30.40 
+ SELECT TIME_FORMAT('09:30:40','%T');				RS=>09.30.40 
+ ___________________________________
+ =>CONVERT_TZ() function (Convert time Zone)
+ CONVERT_TZ(datetime,from_tz to _tz);
+
+SELECT CONVERT_TZ("2021-12-19 09:30:40","+06:30","+07:00");     RS=>2021-12-19 10:00:40
+SELECT CONVERT_TZ("2021-12-19 09:30:40","+07:00","+06:30");     RS=>2021-12-19 09:00:40
+SELECT CONVERT_TZ("NOW()","+06:30","+07:00");					RS=>NULL
+SELECT CONVERT_TZ(NOW(),"+06:30","+07:00");						RS=>2021-12-22 12:18:57
+
+SELECT @@global.time_zone;										RS=>+06:30
+SELECT NOW(),CONVERT_TZ(NOW(),@@global.time_zone,'+07:00');  	RS=>2021-12-22 11:51:55 to 2021-12-22 12:21:55
+______________________________________________
+**GET_FORMAT()  functin with DATE_FORMAT()  dateတွေ timeတွေကို Formatပြန်ချ
+USA = American format
+EUR = European format
+JIS = Japanese industrial format
+ISO = International Organization for Standardization
+INTERNAL = Internal
+
+GET_FORMAT(DATE,'USA')            '%m.%d.%y'
+GET_FORMAT(DATE,'EUR')            %d.%m.%Y
+GET_FORMAT(DATE,'JIS')            %Y-%m-%d
+GET_FORMAT(DATE,'ISO')            %Y-%m-%d
+GET_FORMAT(DATE,'INTERNAL')       %Y%m%d
+
+GET_FORMAT(TIME,'USA')				%h:%i:%s %p
+GET_FORMAT(TIME,'EUR')				%H.%i.%s
+GET_FORMAT(TIME,'JIS')				%H:%i:%s
+GET_FORMAT(TIME,'ISO')				%H:%i:%s
+GET_FORMAT(TIME,'INTERNAL')      	%H%i%s
+
+GET_FORMAT(DATETIME,'USA')				%Y-%m-%d %H.%i.%s
+GET_FORMAT(DATETIME,'EUR')				%Y-%m-%d %H.%i.%s
+GET_FORMAT(DATETIME,'JIS')				%Y-%m-%d %H:%i:%s
+GET_FORMAT(DATETIME,'ISO')				%Y-%m-%d %H:%i:%s
+GET_FORMAT(DATETIME,'INTERNAL')			%Y%m%d%H%i%s
+
+=>Syntax
+SELECT DATE_FORAMT(d/t,GET_FORMAT(d/t/dt,unit));
+
+SELECT DATE_FORMAT(CURDATE(),GET_FORMAT(DATE,'USA'));				RS=>12.22.2021
+SELECT DATE_FORMAT(CURDATE(),GET_FORMAT(DATE,'EUR'));				RS=>22.12.2021
+SELECT DATE_FORMAT(CURDATE(),GET_FORMAT(DATE,'JIS'));				RS=>2021-12-22
+SELECT DATE_FORMAT(CURDATE(),GET_FORMAT(DATE,'ISO'));				RS=>2021-12-22
+SELECT DATE_FORMAT(CURDATE(),GET_FORMAT(DATE,'INTERNAL'));			RS=>20211222
+
+
+SELECT DATE_FORMAT(CURTIME(),GET_FORMAT(TIME,'USA'));				RS=>12:29:27 PM
+SELECT DATE_FORMAT(CURTIME(),GET_FORMAT(TIME,'EUR'));				RS=>12.37.43
+SELECT DATE_FORMAT(CURTIME(),GET_FORMAT(TIME,'JIS'));				RS=>12:37:56
+SELECT DATE_FORMAT(CURTIME(),GET_FORMAT(TIME,'ISO'));				RS=>12:38:01
+SELECT DATE_FORMAT(CURTIME(),GET_FORMAT(TIME,'INTERNAL'));			RS=>123815
+
+SELECT DATE_FORMAT(CURDATE_TIME(),GET_FORMAT(DATE_TIME,'USA'));				RS=>
+SELECT DATE_FORMAT(CURDATETIME(),GET_FORMAT(DATETIME,'EUR'));				RS=>
+SELECT DATE_FORMAT(CURDATETIME(),GET_FORMAT(DATETIME,'JIS'));				RS=>
+SELECT DATE_FORMAT(CURDATETIME(),GET_FORMAT(DATETIME,'ISO'));				RS=>
+SELECT DATE_FORMAT(CURDATETIME(),GET_FORMAT(DATETIME,'INTERNAL'));			RS=>
+
+________________________________________________________________________________________
+
+=>STR_TO_DATE()  function
+=>syntax
+STR_TO_DATE(str,format);   ISO Format အတိုင်း outputထွက်မယ်။
+
+SELECT STR_TO_DATE('19,12,2021','%d,%m,%Y');			RS=>2021-12-19
+SELECT STR_TO_DATE('Dec 19,2021','%M %d,%Y');			RS=>2021-12-19
+SELECT STR_TO_DATE('12/19/2021','%m/%d/%Y');			RS=>2021-12-19
+SELECT STR_TO_DATE('20211222','%Y%m%d');				RS=>2021-12-22
+SELECT STR_TO_DATE('23122021','%d%m%Y');				RS=>2021-12-23
+
+SELECT STR_TO_DATE('09:30:40','%h:%i:%s');			RS=>09:30:40
+SELECT STR_TO_DATE('13:30:40','%H:%i:%s');			RS=>13:30:40
+SELECT STR_TO_DATE('133040','%H%i%s');				RS=>13:30:40
+
+________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

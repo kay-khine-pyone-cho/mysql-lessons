@@ -1,0 +1,31 @@
+=>SUBSTRING()   or  SUBSTR()
+
+Syntax____
+SELECT SUBSTRING('Hello World',1,4);
+SELECT SUBSTR('Hello World',1,4);
+SELECT SUBSTRING('Hello World',2,4);
+SELECT SUBSTRING('Hello World',2,5);   //start from 2nd position and end after 5 characters; (Start,position)
+
+SELECT SUBSTRING('Hello World',4);    //start from 4th position and give all characters after 4th; (Start to end)
+
+SELECT SUBSTRING('Hello, I'm Mr.Anton',1,10);  //Error because of special-case character
+SELECT SUBSTRING("Hello, I'm Mr.Anton",1,10);
+SELECT SUBSTRING('Hello, I\'m Mr.Anton',1,10);
+
+
+SELECT SUBSTRING('Hello WORLD',-7);           //Start from (7th position counting from the end)
+SELECT SUBSTRING('Mysql Online Class',-10);
+
+SELECT address FROM persons;
+SELECT SUBSTRING(address,1,5)FROM persons;
+SELECT SUBSTRING(address,1,5)AS homeid FROM persons;
+SELECT SUBSTRING(address,1,10)AS street FROM persons;
+SELECT SUBSTRING(address,1,10)AS 'short address' FROM persons;
+
+______________________________________________________________________________________________________________________________
+
+=>SUBSTR() with CONCAT()
+
+SELECT CONCAT(SUBSTR(address,1,10),'...') FROM persons;
+SELECT CONCAT(SUBSTR(address,1,10),'...') AS street FROM persons;
+

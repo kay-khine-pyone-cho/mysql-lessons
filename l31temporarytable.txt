@@ -1,0 +1,25 @@
+=>TEMPORARY TABLe
+=> Syntax
+
+CREATE TEMPORARY TABLE IF NOT EXISTS table_name(
+...
+...
+...
+);
+
+CREATE TEMPORARY TABLE IF  NOT EXISTS workers(
+id INT NOT NULL AUTO_INCREMENT,
+name VARCHAR(100),
+age INT,
+city VARCHAR(50),
+PRIMARY KEY(id)
+);
+
+DESC workers;
+
+SHOW TABLES  //doesn't show workers
+
+NOTE ***** 
+Temporary နဲ့ဆောက်တဲ့ Table တွေက  server out သွားတာနဲ့/ database ထဲက ထွက်ပြီးတာနဲ့ ပျောက်သွားတယ်....
+Testing တွေအတွက် သုံးကြတယ်...
+____________________________________________________

@@ -1,0 +1,151 @@
+COUNT()  TO count row
+SUM()
+AVG()
+MIN()
+MAX()
+
+SELECT COUNT(columnname)
+FROM tablename
+WHERE condition;
+
+SELECT COUNT(name)FROM employees;
+
+
+
+
+
+Max() Min()-----
+
+SELECT * FROM tablename WHERE condition;
+SELECT MIN(salary) FROM employees WHERE age > 30;
+SELECT COUNT(*),MIN(salary) FROM employees WHERE age > 30;    //count is for age>30;
+SELECT MAX(salary) FROM employees WHERE age > 30;
+SELECT COUNT(*),MAX(age) FROM employees WHERE age >3;
+SELECT COUNT(*),MAX(age) FROM employees WHERE age <3;
+SELECT name FROM  employees WHERE MAX(salary) ; //cannot use
+SELECT name,salary,city FROM employees WHERE salary =(SELECT MAX(salary) FROM employees);  //including all information about max salary
+
+
+AVG()------
+
+SELECT AVG(columnname)
+FROM tablename
+WHERE condition;
+
+SELECT AVG(salary) FROM employees;
+SELECT AVG(salary) FROM employees WHERE age >30;
+SELECT SUM(salary)) FROM employees WHERE age >30;
+
+_____________________________________________________
+=>IF() Function-----
+=>syntax
+IF(condition,true,false);
+
+SELECT IF(100 > 20,'True','False');     RS=>True
+SELECT IF(100 < 20,'True','False');		RS=>False
+SELECT name,age,salary, 
+IF (age >= 35 ,'Elder','Young') 
+AS 'age verify'  
+FROM employees;
+__________________________________________________
+=>TRUNCATE() function
+=>syntax
+TRUNCATE(num,decimals);
+
+SELECT TRUNCATE(123.456,1);		RS=>123.4
+SELECT TRUNCATE(123.456,2);		RS=>123.45
+SELECT TRUNCATE(123.456,3);		RS=>123.456
+SELECT TRUNCATE(123.456,4);		RS=>123.456
+SELECT TRUNCATE(123.456,0);		RS=>123
+
+Note=> not adding  1 even if it is greater than 4.
+
+SELECT * FROM items;
+SELECT name,price,
+TRUNCATE(price,1)
+FROM items;
+
+__________________________________________________
+
+=>FLOOR() Function
+=>Syntax
+FLOOR(number)
+
+
+SELECT FLOOR(123.345);		RS=>123
+SELECT FLOOR(123.345);		RS=>123
+
+SELECT name,price,
+FLOOR(price) 
+FROM items;
+__________________________________________________
+=>ROUND() Function 
+=>Syntax
+ROUND(number,decimal)
+
+
+SELECT ROUND(123.456,1);		RS=>123.5
+SELECT ROUND(123.456,2);		RS=>123.46
+SELECT ROUND(123.456,3);		RS=>123.456
+SELECT ROUND(123.456,4);		RS=>123.456
+SELECT TROUND(123.456,0);		RS=>123
+
+SELECT name,price,ROUND(price,1) FROM items;
+
+Note=>adding  1  if it is greater than 4.
+________________________________________________
+=.CEIL() function
+=>syntax
+CEIL(number)
+CEILING(number)
+
+SELECT CEIL(123.345);		RS=>124
+SELECT CEIL(123.0001);		RS=>124
+
+SELECT name,price,CEILING(price) FROM items;
+________________________________________________
+=ABS() function
+=>syntax
+ABS(number)
+
+SELECT ABS(-123.345);		RS=>123.456
+SELECT ABS(123.678);		RS=>123.678
+________________________________________________
+=SQRT() function
+=>syntax
+SQRT(number)
+
+SELECT SQRT(49);	RS=>7
+SELECT SQRT(81);		RS=>9
+________________________________________________
+=>POW() function
+=>Syntax
+POW(base,power)
+
+SELECT POW(10,2);		RS=>7
+SELECT POW(4,3);		RS=>64
+SELECT POW(6,3);		RS=>216
+________________________________________________
+
+=>SIGN() Function
+SIGN(number)
+
+number > 0 ,return = 1
+number < 0 ,return = -1
+number = 0 ,return  = 0
+
+SELECT SIGN(500);		RS=>1
+SELECT SIGN(500);		RS=>-1
+SELECT SIGN(500);		RS=>0
+________________________________________________
+
+
+
+
+
+
+
+
+
+
+

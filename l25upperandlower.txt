@@ -1,0 +1,6 @@
+=>UPPER AND LOWER()   (Change a string's case)
+
+UPPER Syntax---
+SELECT UPPER('Hello world');
+SELECT LOWER('Hello World');
+SELECT CONCAT(city,' is transformed to ',UPPER(city),' as capital letters ')AS capital FROM persons;

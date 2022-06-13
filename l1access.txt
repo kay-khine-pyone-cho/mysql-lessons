@@ -1,0 +1,41 @@
+SERVER LOGIN
+
+username=ssh dlt@dltmyanmar.com
+password =datalandtechnology
+
+Ip address
+157.230.240.154
+137.184.248.
+dltmyanmar.com
+
+ssh wdf6499@dltmyanmar.com  
+ssh wdf6499@157.230.240.154 
+ssh wdf6499@dltmyanmar.net 
+
+
+Version Check
+(Method1 = in server)
+mysql -V
+
+(Method2 = in mysql)
+help;
+status;
+
+
+=>Arithmetic operator
+
+operator           Meaning                          Operares one    
++(Add)             Addition                         Numeric Value
+-(Subtract)        Subtraction
+*(Multiply)        Multiplication
+/(Divide)          Division
+%(modulus)         Returns remainder of a division
+
+
+
+
+
+exit
+Database LOGIN
+mysql -uWDF6499 -p
+mysql -u WDF6499 -p

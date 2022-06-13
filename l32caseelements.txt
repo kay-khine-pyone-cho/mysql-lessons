@@ -1,0 +1,68 @@
+=>CASE ELEMENT
+SELECT cil1,col2,col3,..,
+CASE 
+WHEN cond THEN ''
+WHEN cond THEN ''
+WHEN cond THEN ''
+
+END AS..
+FROM table-name;
+
+SELECT name,age,salary,city, 
+CASE  WHEN age < 18 THEN 'younger'
+ELSE 'elder' 
+END AS 'Age Call' 
+FROM employees;
+
+nt*** No over-right
+SELECT name,age,salary city,
+CASE
+WHEN age < 18 THEN 'young'
+WHEN age < 30 THEN 'elder'        
+ELSE 'retired'
+END AS 'age verified'
+FROM employees;
+
+nt*** Strange Result
+SELECT name,age,salary city,
+CASE
+WHEN age < 18 THEN 'young'
+WHEN age >= 35 THEN 'manager'
+ELSE 'elder'
+END AS 'age verified'
+FROM employees;
+
+___________________________________________________
+ SELECT name,age,salary city,
+ CASE
+ WHEN age < 18 THEN 'young'
+ WHEN age >= 18 AND age <=34 THEN 'elder'
+ ELSE 'manager'
+ END AS 'age verified'
+ FROM employees;
+
+ INSERT INTO handsets(name,sellprice,stock) 
+ VALUES ('samsung note 10',150000,35), 
+ ('samsung s9',900000,35), 
+ ('samsung s4',500000,10), 
+ ('vivo 12',500000,20), 
+ ('vivo v6',800000,20), 
+ ('oppo f10',800000,18), 
+ ('oppo d12',1200000,30), 
+ ('sony e9',500000,50), 
+ ('nokia n20',900000,25), 
+ ('nokia 15',300000,8), 
+ ('mi note 10',900000,0);
+
+
+ SELECT name,sellprice,srock,
+CASE
+WHEN srock BETWEEN 1 AND 10 THEN 'max order 10'
+WHEN srock BETWEEN 11 AND 20 THEN 'max order 20'
+WHEN srock BETWEEN 21 AND 30 THEN 'max order 30'
+WHEN srock BETWEEN 31 AND 40 THEN 'max order 40'
+WHEN srock BETWEEN 41 AND 50 THEN 'max order up to 50'
+ELSE 'out of stock'
+END AS 'stock control' 
+FROM handsets;
+_______________________________________

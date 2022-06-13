@@ -1,0 +1,256 @@
+=>Mysql DATA TYPES( Version V8)
+
+*String Data Types (14 types 6/6/2)
+
+Data Types				Description
+
+1.CHAR(size)			A FIXED length string (can contain letters,numbers and special 										characters) ...can be from 0 to 255
+						{ fixed : telephone number / zipcode / Yes-No answers (flags:Y/N) / gender: Male/Female (flags: M/F)
+						  fixed-static : 5 characters declare htr yin 3/0/4/2 characters pl input add lel storage hmr 5 bytes  - storage waste phyit}
+
+2.VARCHAR(size)			A variable length string (can contain letters,numbers and special 									characters) ...can be from 0 to 65535
+						{ variable-dynamic : 5 characters declare lote pe n characters pl input thwin yin storage hmr n+1 bytes yuu }
+
+3.TEXT(size)			can be from 0 to 65535 characters (65 KB) 
+{ can't have default value}
+
+4.TINYTEXT				can be from 1 to 255 characters (article posts) (255 bytes)
+5.MEDIUMTEXT			can be from 256 to 16777215 characters (16 MB)
+6.LONGTEXT				can be from 16777216 to 4294967295 characters(4GB)
+
+7.BINARY(size)
+8.VARBINARY(size)
+9.BLOG(size)
+10.TINYBLOG
+11.MEDIUMBLOG
+12.LONGBLOG
+
+13.ENUM('value1','value2','value3',...)
+14.SET('value1','value2','value3',...)
+___________________________________________________
+
+
+Non-unicode = 1character - 1 byte
+1 byte - 8bits
+speed - char faster than varchar cos char-fixed and varchar-variable. varchar needs to calculate. that's why late.
+varchar has extra byte for spacing in data storage. 
+
+
+Value 			CHAR(4)		Storage   VARCHAR(4)  	Storage
+''				'    '		4 bytes	  ''			1 byte
+"ab"			'ab  '		4 bytes	  'ab'			3 bytes
+'abc'			'abc '		4 bytes	  'abc'			4 bytes
+'abcd'			'abcd'		4 bytes	  'abcd'	    5 bytes
+'abcdefg'		'error'		  		  'error'	      
+
+___________________________________________________
+CREATE TABLE contacts(
+	name CHAR(5)
+);
+
+DESC contacts;
+
+INSERT INTO contacts(name)
+VALUES ('KO');
+
+INSERT INTO contacts(name)
+VALUES ('KO ko');
+
+INSERT INTO contacts(name)
+VALUES ('hello');
+
+INSERT INTO contacts(name)
+VALUES ('');
+
+*error
+INSERT INTO contacts(name)
+VALUES ('heynow');
+
+*error
+INSERT INTO contacts(name)
+VALUES ('hey now');
+
+INSERT INTO contacts(name)
+VALUES("aung"),
+	  ('maung'),
+	  ('ko');
+
+DROP TABLE contacts;
+
+___________________________________________________
+
+CREATE TABLE contacts(
+	name VARCHAR(5)
+);
+
+DESC contacts;
+
+INSERT INTO contacts(name)
+VALUES ('KO');
+
+INSERT INTO contacts(name)
+VALUES ('KO ko');
+
+INSERT INTO contacts(name)
+VALUES ('hello');
+
+INSERT INTO contacts(name)
+VALUES ('');
+
+*error
+INSERT INTO contacts(name)
+VALUES ('heynow');
+
+*error
+INSERT INTO contacts(name)
+VALUES ('hey now');
+
+INSERT INTO contacts(name)
+VALUES("aung"),
+	  ('maung'),
+	  ('ko');
+
+DROP TABLE contacts;
+__________________________________________________
+=>CHAR() / VARCHAR() VS TEXT ()  (14 NOV RC)
+
+CREATE TABLE mytests(
+	id INT DEFAULT 10,
+	name TEXT(50)
+);
+
+DESC mytests;
+
+INSERT INTO mytests(name) VALUES('aung aung');
+
+INSERT INTO mytests(id) VALUES(10);
+
+SELECT * FROM mytests;
+
+DROP TABLE mytests;
+
+*error (BLOB,TEXT,GEOMETRY or JSON can't have a DEFALUT value)
+CREATE TABLE mytests(
+	id INT,
+	name TEXT(50) DEFAULT 'nothing to show'
+);
+
+_________________________________________________
+
+=>VARIABLES
+SHOW VARIABLES;
+
+SHOW CHARACTER SET;
+(can define variable fonts for database/each table //ci-case insensitive)
+
+*utf8_general_ci (maxlength 3 means 3 bytes per character)
+
+*SHOW CHARACTER SET for a single Database
+*check charset
+
+
+Method 1***
+SHOW VARIABLES LIKE 'character_set_database';
+*check collation
+SHOW VARIABLES LIKE 'collation_database';
+
+*SHOW CHARACTER SET =for a single table
+SHOW FULL COLUMNS FROM tablename;
+SHOW TABLE STATUS WHERE NAME LIKE 'tablename';
+SHOW CREATE TABLE tablename;
+
+Method 2***
+SELECT @@character_set_database;
+SELECT @@collation_database;
+
+Method 3***
+SELECT DEFAULT_CHARACTER_SET_NAME 
+FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = "wdf6499";
+
+SELECT DEFAULT_COLLATION_NAME 
+FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = "wdf6499";
+
+SELECT DEFAULT_COLLATION_NAME,DEFAULT_CHARACTER_SET_NAME 
+FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = "wdf6499";
+
+SHOW DATABASES;
+SELECT SCHMEA_NAME FROM INFORMATION_SCHEMA.SCHEMATA;
+SELECT SCHMEA_NAME 'databases' FROM INFORMATION_SCHEMA.SCHEMATA;
+SELECT DEFAULT_CHARACTER_SET_NAME FROM INFORMATION_SCHEMA.SCHEMATA;
+SELECT DEFAULT_CHARACTER_SET_NAME 'characters' FROM INFORMATION_SCHEMA.SCHEMATA;
+SELECT  DEFAULT_COLLATION_NAMEFROM INFORMATION_SCHEMA.SCHEMATA;
+SELECT  DEFAULT_COLLATION_NAME 'collation' FROM INFORMATION_SCHEMA.SCHEMATA;
+
+SELECT SCHEMA_NAME 'DATABASES',DEFAULT_CHARACTER_SET_NAME 'CHARACTER SETS',DEFAULT_COLLATION_NAME 'COLLATION' FROM INFORMATION_SCHEMA.SCHEMATA;
+
+
+
+
+CREATE TABLE mytests(
+	col1 TINYTEXT,
+	col2 TEXT,
+	col3 MEDIUMTEXT,
+	col4 LONGTEXT
+);
+
+DESC mytests;
+DROP TABLE mytests;
+
+CREATE TABLE mytests(
+	col1 TEXT,
+	col2 TEXT(0),
+	col3 TEXT(5),
+);
+
+DESC mytests;
+
+INSERT INTO mytests(col1,col2,col3) VALUES ('aung aung','maung maung','aung kyaw kyaw')
+
+SELECT * FROM mytests;
+
+DROP TABLE mytests;
+
+
+CREATE TABLE mytests(
+	col1 TEXT(255), -- 1-255 tinytext
+	col2 TEXT(65535), -- 256-65535 text
+	col3 TEXT(16777215), --65536-16777215 mediumtext
+	col4 TEXT(4294967295) --16777216-4294967295 longtext
+)ENGINE=InnoDB CHARSET =latin1;
+
+DESC mytests;
+DROP TABLE mytests;
+
+CREATE TABLE mytests(
+	col1 TEXT(255), -- 1-255 tinytext
+	col2 TEXT(65535), -- 256-65535 text
+	col3 TEXT(16777215), --65536-16777215 mediumtext
+	col4 TEXT(4294967295) --16777216-4294967295 longtext
+)ENGINE=InnoDB CHARSET =latin2;
+
+DESC mytests;
+SHOW FULL COLUMNS FROM mytests;
+SHOW TABLE STATUS WHERE NAME LIKE 'mytests';
+DROP TABLE mytests;
+
+
+CREATE TABLE mytests(
+	col1 TEXT(85), -- 1-85 tinytext
+	col2 TEXT(21845), -- 86-21845 text
+	col3 TEXT(5592405), --21845-5592405 mediumtext
+	col4 TEXT(5592405) --5592405-4294967295 longtext
+)ENGINE=InnoDB CHARSET =utf8;
+
+DESC mytests;
+DROP TABLE mytests;
+
+sql comment (-- )
+
+14CS
+
+CREATE TABLE mytests(
+col1 TEXT(255),
+col2 TEXT(65535),
+col3 TEXT(16777215),
+col4 TEXT(4294967295)
+)ENGINE = InnoDB CHARSET=latin1; 

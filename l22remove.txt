@@ -1,0 +1,19 @@
+=>REPLACE(Replace parts of strings for results)
+
+
+SELECT REPLACE('Hello World','Hell','Zer');
+SELECT REPLACE('Tin Htut Aung','Aung','Maung');
+SELECT REPLACE('Hello World','hell','Zer');    //no action
+SELECT REPLACE('Hello World','hello','Zer');	//no action
+SELECT REPLACE('Hello World','o','a');
+SELECT REPLACE('HellO World','O','*');
+SELECT REPLACE('Hello World','0','7');
+SELECT REPLACE('cheese bread coffee milk',' ',' and ');
+
+SELECT * FROM persons;
+SELECT REPLACE(city,'m','M') FROM persons;_
+SELECT SUBSTR(REPLACE(city,'m','M'),1,5) FROM persons;
+SELECT CONCAT(SUBSTR(REPLACE(address,'n','N'),1,5),'...') FROM persons;
+
+SELECT SUBSTR(CONCAT(REPLACE(address,'n','N'),'...'),1,11) FROM persons;
+

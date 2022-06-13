@@ -1,0 +1,199 @@
+=>Database Multiple Trigger
+
+Trigger မှာ 
+eventတွေ time (BEFORE UPDATE,AFTER DELETE,...)တွေက တူတူသုံးလို့မရ
+table တခုတည်းပေါ်တော့မရ
+table မတူရင်တော့ရ
+တူတူသုံးချင်ရင်တော့ specifies နဲ့ သုံးရမယ်
+
+=>Syntax
+DELIMITER //
+CREATE TRIGGER triggername
+trigger_time trigger_event
+ON tablename FOR EACH ROW
+specifies existingtriggername
+BEGIN 
+	-- statements execute
+END; //
+DELIMITER ;
+
+
+=>trigger_time
+BEFORE
+AFTER
+
+=>trigger_event
+INSERT
+UPDATE
+DELETe
+
+=>specifies
+PRECEDES (before activate) (ဒီနယ်ပယ်မှာသိပ်မသုံး)
+FOLLOWS (after activate)
+________________________________________________
+CREATE TABLE IF NOT EXISTS staffs(
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(50),
+age INt,
+salary DECIMAL(10,2),
+status INT DEFAULT 1
+);
+
+DESC staffs;
+
+INSERT INTO staffs(name,age,salary) VALUES
+('aungaung',20,500000),
+('zawzaw',30,350000);
+
+CREATE TABLE IF NOT EXISTS salarylogs(
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+oldsalary DECIMAL(10,2) NOT NULL,
+newsalary DECIMAL(10,2) NOT NULL,
+staff_id INT NOT NULL,
+updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY(staff_id) REFERENCES staffs(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+DESC salarylogs;
+
+-----------------------------------
+=>BEFORE UPDATE
+
+DELIMITER //
+
+CREATE TRIGGER staffsalary_bfu
+BEFORE UPDATE
+ON staffs FOR EACH ROW
+BEGIN
+	IF OLD.salary <> NEW.salary THEN
+	INSERT INTO salarylogs(oldsalary,newsalary,staff_id)
+	VALUES (OLD.salary,NEW.salary,OLD.id);
+	END IF;
+END; //
+
+DELIMITER ;
+
+SELECT * FROM staffs;
+SELECT * FROM salarylogs;
+
+UPDATE staffs SET age = 25 WHERE id = 1;
+UPDATE staffs SET status = 2 WHERE id = 2;
+UPDATE staffs SET salary = 550000 WHERE id = 1;
+UPDATE staffs SET salary = 550000 WHERE id = 2;
+UPDATE staffs SET salary = 500000 WHERE id = 1;
+
+INSERT INTO staffs(name,age,salary)
+VALUES('susu',30,350000);
+-------------------------------------------
+=>BEFORE UPDATE(Follows)
+
+CREATE TABLE IF NOT EXISTS salarydifflogs(
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+diffamount DECIMAL(10,2) NOT NULL,
+staff_id INT NOT NULL,
+updated_by VARCHAR(50) NOT NULL,
+FOREIGN KEY(staff_id) REFERENCES staffs(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+DESC salarydifflogs;
+
+DELIMITER //
+
+CREATE TRIGGER staffsalarydiff_bfuf
+BEFORE UPDATE
+ON staffs FOR EACH ROW
+FOLLOWS staffsalary_bfu
+BEGIN
+	DECLARE oldsalary INt;
+	DECLARE newsalary INT;
+	DECLARE getdiff INT;
+	SET @oldsalary = OLD.salary;
+	SET @newsalary = NEW.salary;
+	SET getdiff = @newsalary - @oldsalary;
+
+	IF Old.salary <> NEW.salary THEN
+	INSERT INTO salarydifflogs(diffamount,staff_id,updated_by)
+	VALUES(getdiff,OLD.id,USER());
+	END IF;
+END; //
+DELIMITER ;
+
+
+SELECT * FROM staffs;
+SELECT * FROM salarylogs;
+SELECT * FROM salarydifflogs;
+
+UPDATE staffs SET age = 30 WHERE id = 1;
+UPDATE staffs SET status = 1 WHERE id = 2;
+UPDATE staffs SET salary = 550000 WHERE id = 1;
+UPDATE staffs SET salary = 550000 WHERE id = 1;
+
+UPDATE staffs SET salary = 650000 WHERE id = 2;
+UPDATE staffs SET salary = 200000 WHERE id = 3;
+
+DROP TRIGGER IF EXISTS staffsalarydiff_bfuf;
+_____________________________________________________________________________
+
+=>BEFORE UPDATE(PRECEDES)
+DELIMITER //
+
+CREATE TRIGGER staffsalarydiff_bfup
+BEFORE UPDATE
+ON staffs FOR EACH ROW
+PRECEDES staffsalary_bfu
+BEGIN
+	SET @oldsalary = OLD.salary,
+		@newsalary = NEW.salary,
+		@getdiff = @newsalary - @oldsalary;
+
+	IF Old.salary <> NEW.salary THEN
+	INSERT INTO salarydifflogs(diffamount,staff_id,updated_by)
+	VALUES(@getdiff,OLD.id,USER());
+	END IF;
+END; //
+DELIMITER ;
+____________________________________________________________________________
+
+
+EVENT 		OLD 	NEw
+INSERT		NO 		YES
+updated 	YES		YES
+DALETE		YES		NO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+staffs
+id
+name
+age
+salary
+status 
+
+salarylogs
+id
+oldsalary
+newsalary
+staff_id
+updated_at
+
+salarydifflogs
+id
+diff
+staff_id
+updated_by
+
+
+

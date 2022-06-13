@@ -1,0 +1,18 @@
+=>SELECT DATA <How to retreve and search data>
+Method 1...= Syntax
+SELECT * FROM tablename;
+
+Method 2...= Syntax
+SELECT column1,column2,.. FROM tablename;
+----------------------------------------------------
+Exercise...
+Method 1...
+
+server LOGIN
+database LOGIN
+choose database
+SELECT * FROM persons;
+------
+Method 2...
+
+SELECT personid,firstname,city FROM persons;

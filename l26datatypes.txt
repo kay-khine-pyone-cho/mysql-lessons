@@ -1,0 +1,218 @@
+=>MYSQL DATA TYPES (Version v8)
+
+*String data Types
+Data Types               DESCRIPTION
+1.CHAR(size)               
+2.VARCHAR(size)          A FIXED LENGHT string(can contain letters,numbers and special characters)can be 0                   to 255  
+3.TEXT(size)          A VARIABLE LENGTH string(can contain letters,numbers and special characters) can be                 from 0 to 65535
+4.TINYTEXT            can be from 0 to 255
+5.MEDIUMTEXT          can be from 0 to 16777215 characters (16MB)
+6.LONGTEXT            can be from 0 to 4294967295 characters(4GB)
+
+7.BINARY()
+8.VARBINARY()
+9.BLOB(size)
+10.TINYBLOG
+11.MEDIUMBLOB
+12.LONGBLOB
+
+13.ENUM('value1','value2','value3'....)
+14.SET('value1','value2','value3'....)
+
+
+
+
+
+
+
+
+=>About CHAR
+*CHAR is faster than VARCHAR
+*Static DATATYPE
+*eg:Telephone numbers,Zip Code
+*YES/NO flags: Y/N
+*Sex : Male/Female Flags : M/F
+
+Non-unicode = 1 character = 1 byte
+1 byte = 8 bits
+CHAR(4) VS VARCHAR(4)
+Value      CHAR(4)      Storage    VARCHAR(4)     Storage
+''        '    '      4 bytes    ''        1 byte
+'a'        'a   '      4 bytes    'a'        2 bytes
+'ab'      'ab  '      4 bytes    'ab'      3 bytes
+'abc'      'abc '      4 bytes    'abc'      4 bytes
+'abcd'      'abcd'      4 bytes    'abcd'      5 bytes
+'abcdefg'    error             error      
+
+
+__________________________________________________________________
+
+CREATE TABLE contacts(
+name CHAR(5)
+);
+
+DESC contacts;
+
+INSERT INTO contacts(name)
+VALUES ('ko');
+
+INSERT INTO contacts(name)
+VALUES ('ko ko');
+
+INSERT INTO contacts(name)
+VALUES ('Hello');
+
+*ERROR
+INSERT INTO contacts(name)
+VALUES ('haynow');
+
+*ERROR
+INSERT INTO contacts(name)
+VALUES ('now hay');
+
+INSERT INTO contacts(name)
+VALUES ('aung'),
+    ('maung'),
+    ('ko');
+
+DROP TABLE contacts;
+
+__________________________________________________________________
+
+CREATE TABLE contacts(
+name VARCHAR(5)
+);
+
+DESC contacts;
+
+INSERT INTO contacts(name)
+VALUES ('ko');
+
+INSERT INTO contacts(name)
+VALUES ('ko ko');
+
+INSERT INTO contacts(name)
+VALUES ('Hello');
+
+*ERROR
+INSERT INTO contacts(name)
+VALUES ('haynow');
+
+*ERROR
+INSERT INTO contacts(name)
+VALUES ('now hay');
+
+INSERT INTO contacts(name)
+VALUES ('aung'),
+    ('maung'),
+    ('ko');
+
+DROP TABLE contacts;
+
+__________________________________________________________________
+
+CREATE TABLE contacts(
+name CHAR(5)
+);
+
+DESC contacts;
+
+INSERT INTO contacts(name)
+VALUES ('ko');
+
+INSERT INTO contacts(name)
+VALUES ('ko ko');
+
+INSERT INTO contacts(name)
+VALUES ('Hello');
+
+*ERROR
+INSERT INTO contacts(name)
+VALUES ('haynow');
+
+*ERROR
+INSERT INTO contacts(name)
+VALUES ('now hay');
+
+INSERT INTO contacts(name)
+VALUES ('aung'),
+    ('maung'),
+    ('ko');
+
+DROP TABLE contacts;
+
+__________________________________________________________________
+
+=>CHAR() / VARCHAR ()
+
+CREATE TABLE mytests(
+  id INT DEFAULT 10,
+  name VARCHAR(50)
+);
+
+DESC mytests;
+
+INSERT INTO mytests(name) VALUES('aung aung');
+
+SELECT * FROM mytests;
+
+DROP TABLE mytests;
+
+__________________________________________________________________
+
+=>CHAR() / VARCHAR ()
+
+CREATE TABLE mytests(
+  id INT,
+  name VARCHAR(50)  DEFAULT 'nothing to show'
+);
+
+DESC mytests;
+
+INSERT INTO mytests(name) VALUES('aung aung');
+
+SELECT * FROM mytests;
+
+INSERT INTO mytests(id) VALUES(10);
+
+SELECT * FROM mytests;
+
+DROP TABLE mytests;
+
+__________________________________________________________________
+
+CREATE TABLE mytests(
+  id INT,
+  name TEXT(50)
+);
+
+DESC mytests;
+
+INSERT INTO mytests(name) VALUES('aung aung');
+
+SELECT * FROM mytests;
+
+INSERT INTO mytests(id) VALUES(10);
+
+SELECT * FROM mytests;
+
+DROP TABLE mytests;
+
+__________________________________________________________________
+
+*error (BLOB, TEXT, GEOMETRY and JSON can,t have default name)
+CREATE TABLE mytests(
+  id INT,
+  name TEXT(50) DEFAULT 'hay now'
+); ***can't create table***
+
+
+__________________________________________________________________
+
+=> VARIABLES 
+
+SHOW VARIABLES;
+
+SHOW CHARACTER SET;
+
+*utf8_general_ci (ci is case insensitive) maxlength 3 is mean 3bytes per character.

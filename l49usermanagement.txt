@@ -1,0 +1,266 @@
+=>Comments
+(i)Single Line Comment
+	# comment here (or) #comment here
+	-- comment here (space needed)
+	/* comment here */
+
+
+
+(ii)Multiline Comment
+	/*
+		comment one
+		comment two
+	*/
+
+SELECT (1+1); #comment
+SELECT (1+1); # comment
+SELECT (1+1); -- comment
+SELECT (1+1); /*comment here*/
+SELECT (1+1); /* comment here */
+
+________________________________________________________________
+=>USER MANAGEMENT
+
+=>CREATE USER
+=>Syntax
+CREATE USER username IDENTIFIED BY 'password';
+
+CREATE USER 'mya6320'@'localhost' IDENTIFIED BY 'mya632000';
+SELECT USER();
+
+\q
+mysql -u mya6320 -p'mya632000'    
+
+=>Existing Users(cannot view users with username mya6320 cuz of no permission)
+SELECT USER FROM mysql.user;
+SELECT USER FROM mysql.user WHERE USER LIKE 'm%';
+
+mysql -u WDF6499 -p 'datalandtechnology'
+SELECT USER FROM mysql.user;
+SELECT USER FROM mysql.user WHERE USER LIKE 'm%';
+
+Note : ALL PRIVILEGES(it gives all privileges to new user)
+		CREATE(databases and  table)
+		DROP (databases and tables)
+		INSERT (specific table)
+		SELECT (specific table)
+		UPDATE (specific table)
+		DELETE (specific table)
+
+=>SYNTAX : (databasename,tablename)
+GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost';
+FLUSH PRIVILEGES;
+
+GRANT CREATE,SELECT,INSERT ON *.* TO 'username'@'localhost';
+FLUSH PRIVILEGES;
+
+*error = Access Denied (cus WDF6499@localhost was subaccount )
+GRANT ALL PRIVILEGES ON *.* TO 'mya6320'@'localhost';
+
+SHOW GRANTS FOR 'WDF6499'@'localhost';
+SHOW GRANTS FOR 'mya6320'@'localhost';
+
+\q
+mysql -u root -p'sqlpassword20201A'
+GRANT ALL PRIVILEGES ON *.* TO 'mya6320'@'localhost';
+FLUSH PRIVILEGES;
+
+mysql -u mya6320 -p'mya632000'    
+SELECT USER();
+SHOW DATABASES;
+SELECT USER FROM mysql.user WHERE USER LIKE 'm%';
+
+user တွေကို privileges ပေးချင်ရင် root acc ကနေပဲပေးလို့ရမယ်
+sub acc တွေကနေ ပေးလို့မရ
+
+___________________
+
+=>DROP USER
+
+Method 1
+=>Syntax (Single)
+	DROP USER 'username'@'localhost';
+
+=>Syntax (Multi)
+	DROP USER 'username1'@'localhost','username1'@'localhost';
+
+Method 2
+DELETE FROM mysql.user USER = 'mya6320';
+
+
+
+username ဖျက်ချင်ရင် သက်ဆိုင်ရာ sub accကနေ ဖျက်ရမယ်.
+mysql -u 'WDF6499' -p'datalandtechnology'
+DROP USER 'mya6320'@'localhost';
+
+_______________________________________________________
+\q
+mysql -u root -p'sqlpassword20201A'
+CREATE USER 'mya6320'@'localhost' IDENTIFIED BY 'mya632000';
+
+SELECT USER FROM mysql.user WHERE USER = 'mya6320';
+SHOW GRANTS FOR 'mya6320'@'localhost';
+
+
+GRANT CREATE,SELECT,INSERT ON *.* TO 'mya6320'@'localhost';
+FLUSH PRIVILEGES;
+
+SHOW GRANTS FOR 'mya6320'@'localhost';
+USE wdf6499;
+SELECT database();
+SHOW TABLES;
+
+*err
+DROP TABLE 'workers';
+ 
+ -----------------
+
+ ->RENAME USER
+
+ =>Syntax(single)
+
+ RENAME USER oldname TO newname;
+
+ =>Syntax (Multi)
+  RENAME USER oldname1 TO newname1,oldname2 TO newname2;
+
+root or sub accကနေ rename 
+\q
+mysql -u root -p'sqlpassword20201A'
+RENAME USER 'mya6320'@'localhost' TO 'mya'@'localhost';
+SELECT USER FROM mysql.user WHERE USER = 'mya6320';
+
+SELECT USER FROM mysql.user WHERE USER = 'mya';
+\q
+mysql -u mya -p'mya632000' 
+__________________________________________________
+=>Change password
+
+=>Syntax
+ALTER USER 'username'@'localhost' IDENTIFIED By 'newpassword';
+
+=>By Root User | Sub Account
+\q
+mysql -u WDF6499 -p'datalandtechnology'
+
+SELECT USER FROM mysql.user WHERE USER LIKE 'm%';
+ALTER USER 'mya'@'localhost' IDENTIFIED BY '11111';
+
+mysql -u mya -p'11111' 
+
+=>By admin
+ALTER USER 'mya'@'localhost' IDENTIFIED BY 'mya632000';
+mysql -u mya -p'mya632000' 
+_____________________________________________________
+=> Account Lock (2.3.2022)
+=>Syntax (By new user)
+CREATE USER username IDENTIFIED BY 'password' ACCOUNT LOCK;
+
+=>Syntax (By existing user)
+ALTER USER username IDENTIFIED BY 'password' ACCOUNT LOCK;
+
+SELECT USER FROM mysql.user WHERE USER LIKE 'm%';
+
+=>By new user 
+CREATE USER 'mya001'@'localhost' IDENTIFIED BY '123456789' ACCOUNT LOCK;
+
+SELECT USER FROM mysql.user WHERE USER LIKE 'm%';
+
+**error** Account is lock
+\q
+mysql -u mya001 -p'123456789'
+
+SELECT USER,ACCOUNT_LOCKED FROM mysql.user;
+SELECT USER,ACCOUNT_LOCKED FROM mysql.user WHERE USER LIKE 'm%';
+---------------------
+=>Bu existing user
+
+\q
+mysql -u mya6320 -p'mya632000' 
+
+ALTER USER 'mya6320'@'localhost' ACCOUNT LOCK;
+SELECT USER,ACCOUNT_LOCKED FROM mysql.user WHERE USER LIKE 'm%';
+
+**error**ACcount Locked
+mysql -u mya6320 -p'mya632000' 
+
+_______________________________________________________________
+CREATE USER 'mya002'@'localhost' IDENTIFIED BY '123456789' ACCOUNT LOCK;
+
+RENAME USER 'mya6320'@'localhost' TO 'mya003'@'localhost';
+
+=>Account UNLOCK
+=>Syntax (single)
+ALTER USER username ACCOUNT LOCK;
+
+=>Syntax (Multi)
+ALTER USER username1,username2,.... ACCOUNT UNLOCK;
+
+SELECT USER,ACCOUNT_LOCKED FROM mysql.user WHERE USER LIKE 'm%';
+ALTER USER 'mya001'@'localhost' ACCOUNT UNLOCK;
+ALTER USER 'mya002'@'localhost','mya6320'@'localhost' ACCOUNT UNLOCK;
+
+mysql -u mya -p'mya632000' 
+mysql -u mya001 -p'123456789'
+mysql -u mya002 -p'123456789'
+mysql -u mya003 -p'mya632000' 
+mysql -u root -p'sqlpassword20201A'
+mysql -u WDF6499 -p'datalandtechnology'
+
+__________________________________________________
+=>REVOKE(From root)
+user တွေကို privileges revoke ချင်ရင် root acc ကနေပဲပေးလို့ရမယ်
+sub acc တွေကနေ ပေးလို့မရ
+
+SHOW GRANTS FOR 'mya'@'localhost';		\\select,create,insert
+SHOW GRANTS FOR 'mya001'@'localhost';  \\no permission yet
+SHOW GRANTS FOR 'mya002'@'localhost';  \\no permission yet
+SHOW GRANTS FOR 'mya003'@'localhost';  \\all permission 
+
+mysql -u root -p'sqlpassword20201A'
+
+GRANT CREATE,SELECT,INSERT ON *.* TO 'mya001'@'localhost';
+FLUSH PRIVILEGES;
+SHOW GRANTS FOR 'mya001'@'localhost'; \\select,create,insert
+
+REVOKE ALL PRIVILEGES ON *.* FROM 'mya001'@'localhost';
+SHOW GRANTS FOR 'mya001'@'localhost';  \\no permission  revoken
+
+________________________________________________________________
+=>GRANT and REvoke
+
+mysql -u mya003 -p'mya632000' 
+SHOW GRANTS FOR 'mya003'@'localhost'; \\all permission
+
+REVOKE ALL PRIVILEGES ON *.* FROM 'mya003'@'localhost';
+SHOW GRANTS FOR 'mya003'@'localhost'; \\no permission
+
+mysql -u mya003 -p'mya632000'
+SHOW DATABASES;   //no databases cuz of no permissions
+----
+
+mysql -u root -p'sqlpassword20201A'
+GRANT ALL PRIVILEGES ON wdf6499.workers TO 'mya003'@'localhost';
+SHOW GRANTS FOR 'mya003'@'localhost';
+
+mysql -u mya003 -p'mya632000'
+SHOW DATABASES;  //wdf6499
+USE wdf6499;
+SHOW TABLES;	//workers
+-----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
